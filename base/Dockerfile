@@ -6,6 +6,8 @@ RUN sed -i -e "s|http://archive.ubuntu.com|http://jp.archive.ubuntu.com|g" /etc/
       sudo \
       openjdk-8-jdk \
       curl \
+      wget \
+      ca-certificates \
       gnupg \
       procps \
       python3 \
