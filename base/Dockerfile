@@ -6,8 +6,6 @@ RUN sed -i -e "s|http://archive.ubuntu.com|http://jp.archive.ubuntu.com|g" /etc/
       sudo \
       openjdk-8-jdk \
       curl \
-      wget \
-      ca-certificates \
       gnupg \
       procps \
       python3 \
@@ -55,6 +53,7 @@ ENV LD_LIBRARY_PATH=$HADOOP_HOME/lib/native:$LD_LIBRARY_PATH
 # Spark
 ARG SPARK_VERSION=3.5.3
 ARG SPARK_URL=https://archive.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop3.tgz
+ARG SPARK_GRAPHFRAMES_URL=https://repos.spark-packages.org/graphframes/graphframes/0.8.4-spark3.5-s_2.12/graphframes-0.8.4-spark3.5-s_2.12.jar
 ENV SPARK_HOME=/opt/spark
 
 RUN set -x \
@@ -67,7 +66,8 @@ RUN set -x \
  && gpg --verify /tmp/spark.tgz.asc \
  && tar -xf /tmp/spark.tgz -C $SPARK_HOME --strip-components 1 \
  && rm /tmp/spark* \
- && curl -fsSL https://jdbc.postgresql.org/download/postgresql-42.3.2.jar -o $SPARK_HOME/jars/postgresql-42.3.2.jar
+ && curl -fsSL https://jdbc.postgresql.org/download/postgresql-42.3.2.jar -o $SPARK_HOME/jars/postgresql-42.3.2.jar \
+ && curl -fsSL $SPARK_GRAPHFRAMES_URL -o $SPARK_HOME/jars/graphframes-0.8.4-spark3.5-s_2.12.jar
 
 ENV PYTHONHASHSEED=1
 ENV PYSPARK_PYTHON=python3
