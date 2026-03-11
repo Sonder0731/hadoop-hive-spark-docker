@@ -16,7 +16,7 @@ Do not use in a production environment
 To deploy the cluster, run:
 ```sh
 make
-docker-compose up
+docker compose up
 ```
 
 ## Access interfaces with the following URL
